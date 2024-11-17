@@ -1,23 +1,25 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { Post, User } from "./models";
 import { connectToDb } from "./utils";
 import { signIn, signOut } from "./auth";
 import bcrypt from "bcryptjs";
+// import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
-export const addPost = async (prevState,formData) => {
+export const addPost = async (prevState, formData) => {
   // const title = formData.get("title");
   // const desc = formData.get("desc");
   // const slug = formData.get("slug");
 
-  const { title, desc, slug, userId } = Object.fromEntries(formData);
+  const { title, desc, img, slug, userId } = Object.fromEntries(formData);
 
   try {
     connectToDb();
     const newPost = new Post({
       title,
       desc,
+      img,
       slug,
       userId,
     });
@@ -48,15 +50,43 @@ export const deletePost = async (formData) => {
   }
 };
 
-export const addUser = async (prevState,formData) => {
+export const likePost = async (formData) => {
+  const { postId, userId } = Object.fromEntries(formData);
+  
+  try {
+    await connectToDb();
+    
+    const post = await Post.findById(postId);
+    const hasLiked = post.likes.includes(userId);
+    await Post.findOneAndUpdate(
+      { _id: postId },
+      {
+        [hasLiked ? '$pull' : '$push']: {
+          likes: userId
+        }
+      },
+    )
+    revalidatePath(`/blog/${postId}`)
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      error: error.message
+    };
+  }
+};
+
+export const addUser = async (prevState, formData) => {
   const { username, email, password, img } = Object.fromEntries(formData);
 
   try {
-    connectToDb();
+    await connectToDb();
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
     const newUser = new User({
       username,
       email,
-      password,
+      password: hashedPassword,
       img,
     });
 

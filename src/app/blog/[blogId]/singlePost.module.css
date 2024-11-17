@@ -17,9 +17,17 @@
   flex: 2;
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  gap: 10px;
 }
 
+.reactions{
+  display: flex;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+.reactionBtn{
+  cursor: pointer;
+}
 .title{
   font-size: 64px;
 }

@@ -15,10 +15,12 @@ import { unstable_noStore as noStore } from "next/cache";
 //   { id: 4, title: "Post 4", body: "......", userId: 2 },
 // ];
 
-export const getPosts = async () => {
+export const getPosts = async (currentPage, limit) => {
   try {
     connectToDb();
-    const posts = await Post.find();
+    const itemsToSkip = (currentPage - 1) * limit;
+    const posts = await Post.find().limit(limit * currentPage).skip(itemsToSkip)
+    console.log('posts->>>',posts,itemsToSkip,limit)
     return posts;
   } catch (err) {
     console.log(err);

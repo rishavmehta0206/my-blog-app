@@ -3,6 +3,9 @@ import styles from "./singlePost.module.css";
 import PostUser from "@/components/postUser/postUser";
 import { Suspense } from "react";
 import { getPost } from "@/lib/data";
+import { CiHeart } from "react-icons/ci";
+import { FaRegComment } from "react-icons/fa";
+import { likePost } from "@/lib/action";
 
 // FETCH DATA WITH AN API
 const getData = async (blogId) => {
@@ -16,20 +19,20 @@ const getData = async (blogId) => {
   return res.json();
 };
 
-export const generateMetadata = async ({ params }) => {
-  const { blogId } = params;
+// export const generateMetadata = async ({ params }) => {
+//   const { blogId } = params;
 
-  const post = await getPost(blogId);
+//   const post = await getPost(blogId);
 
-  return {
-    title: post.title,
-    description: post.desc,
-  };
-};
+//   return {
+//     title: post.title,
+//     description: post.desc,
+//   };
+// };
 
 const SinglePostPage = async ({ params }) => {
   const { blogId } = params;
-  console.log(blogId)
+  console.log(blogId);
   // FETCH DATA WITH AN API
   const post = await getPost(blogId);
 
@@ -45,6 +48,35 @@ const SinglePostPage = async ({ params }) => {
       )}
       <div className={styles.textContainer}>
         <h1 className={styles.title}>{post.title}</h1>
+        <div className={styles.reactions}>
+          <form className={styles.reactionBtn}>
+            {/* <CiHeart onClick={()=>{
+              'use clinet'
+              likePost(post?.userId,post?._id)
+            }}  size={30}/> */}
+            {/* <CiHeart onClick={()=>{
+              'use clinet'
+              likePost(post?.userId,post?._id)
+            }}  size={30}/> */}
+          </form>
+          <form className={styles.reactionBtn} action={likePost}>
+            <input type="hidden" name="postId" value={blogId} />
+            <input type="hidden" name="userId" value={post.userId} />
+            <button style={{
+              backgroundColor:'transparent',
+              border:'none',
+              display:'flex',
+              alignItems:'center'
+            }}>
+              <CiHeart style={{
+                color:post.likes.includes(post?.userId) && 'red' 
+              }} size={30} /> {post.likes.length}
+            </button>
+          </form>
+          {/* <div className={styles.reactionBtn}>
+            <FaRegComment size={26} />
+          </div> */}
+        </div>
         <div className={styles.detail}>
           {post && (
             <Suspense fallback={<div>Loading...</div>}>

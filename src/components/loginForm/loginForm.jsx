@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const LoginForm = () => {
   const [state, formAction] = useActionState(login, undefined);
-
+  
   return (
     <form className={styles.form} action={formAction}>
       <input type="text" placeholder="username" name="username" />
