@@ -9,7 +9,7 @@ const BlogComments = ({ userId, userName, imgSrc, actionId, blogId }) => {
   const [comments, setComments] = useState([]);
   async function addNewComment() {
     try {
-      let response = await fetch("https://my-blog-app-livid.vercel.app/api/comment", {
+      let response = await fetch("https://my-blog-app-tfz5.vercel.app/api/comment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
