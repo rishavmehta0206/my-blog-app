@@ -1,0 +1,30 @@
+.container{
+    padding:10px 0;
+}
+
+.actionButtons{
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.like{
+    background-color: transparent;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.comment{
+    background-color: transparent;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.like.active{
+    color: red;
+}

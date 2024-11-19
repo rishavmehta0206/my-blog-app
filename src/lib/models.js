@@ -29,6 +29,37 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+const commentSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: String,
+      required: true,
+    },
+    postId: {
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: "postSchema",
+    },
+    comment: {
+      type: String,
+      max: 500,
+      required:true
+    },
+    likes: {
+      type: Array,
+      default: [],
+    },
+    dislikes: {
+      type: Array,
+      default: [],
+    },
+    reply: {
+      type: Array,
+      default: [],
+    },
+  },
+  { timestamps: true }
+);
+
 const postSchema = new mongoose.Schema(
   {
     title: {
@@ -55,7 +86,7 @@ const postSchema = new mongoose.Schema(
     comments: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: userSchema,
+        ref: commentSchema,
       },
     ],
     slug: {
@@ -67,5 +98,8 @@ const postSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+
+
 export const User = mongoose.models?.User || mongoose.model("User", userSchema);
 export const Post = mongoose.models?.Post || mongoose.model("Post", postSchema);
+export const Comment = mongoose.models?.Comment || mongoose.model("Comment", commentSchema);

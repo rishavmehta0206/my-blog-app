@@ -1,4 +1,4 @@
-import { Post, User } from "./models";
+import { Comment, Post, User } from "./models";
 import { connectToDb } from "./utils";
 import { unstable_noStore as noStore } from "next/cache";
 
@@ -61,3 +61,18 @@ export const getUsers = async () => {
     throw new Error("Failed to fetch users!");
   }
 };
+
+
+export const getComments = async (commentId) => {
+  try {
+    await connectToDb();
+    const comment = await Comment.findById(commentId).populate({
+      path:"userId",
+      model:"User",
+      select:"username img"
+    });
+    return comment
+  } catch (error) {
+    throw new Error("Failed to fetch comment!");
+  }
+}
