@@ -87,8 +87,8 @@ const BlogComments = ({ userId, userName, imgSrc, actionId, blogId }) => {
         </div>
       </div>
       <div className={styles.comments}>
-        {comments?.map((comment) => (
-          <div className={styles.commentDisplayContainer}>
+        {comments?.map((comment,index) => (
+          <div key={index} className={styles.commentDisplayContainer}>
             <Image
               src={comment?.img?.length > 0 ? comment.img : "/noavatar.png"}
               alt=""
