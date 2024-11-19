@@ -36,7 +36,7 @@ const BlogComments = ({ userId, userName, imgSrc, actionId, blogId }) => {
     const fetchComments = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/comment?blogId=${blogId}`,
+          `https://my-blog-app-tfz5.vercel.app/api/comment?blogId=${blogId}`,
           {
             method: "GET",
             headers: {
