@@ -10,7 +10,7 @@ export default function BlogActions({actionId,userId,blogId,likes,comments}) {
     console.log(likes)
     async function likePost(){
       
-        let response = await fetch('https://my-blog-app-tfz5.vercel.app/api/like',{
+        let response = await fetch('https://my-blog-app-tawny-omega.vercel.app/api/like',{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
