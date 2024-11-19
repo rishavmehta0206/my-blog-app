@@ -9,7 +9,7 @@ const BlogComments = ({ userId, userName, imgSrc, actionId, blogId }) => {
   const [comments, setComments] = useState([]);
   async function addNewComment() {
     try {
-      let response = await fetch("https://my-blog-app-tfz5.vercel.app/api/comment", {
+      let response = await fetch("https://my-blog-app-tawny-omega.vercel.app/api/comment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,7 +36,7 @@ const BlogComments = ({ userId, userName, imgSrc, actionId, blogId }) => {
     const fetchComments = async () => {
       try {
         const response = await fetch(
-          `https://my-blog-app-tfz5.vercel.app/api/comment?blogId=${blogId}`,
+          `https://my-blog-app-tawny-omega.vercel.app/api/comment?blogId=${blogId}`,
           {
             method: "GET",
             headers: {
